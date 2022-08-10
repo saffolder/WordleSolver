@@ -28,6 +28,7 @@ public class Solvle {
     int removedCount = 0;
 
     // begin playing
+    // STUMBLE WORDS: egret
     while (notSolved && round < 6) {
       round++;
       System.out.println("Please enter your guess:\n");
