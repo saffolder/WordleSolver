@@ -15,9 +15,8 @@ public class Solvle {
     List<char[]> words = new ArrayList<>();
     Scanner wordReader = new Scanner(new File("words.txt"));
     while (wordReader.hasNextLine()) {
-      String word = wordReader.nextLine();
-      words.add(word.toCharArray());
-     // System.out.println(word);
+      char[] word = wordReader.nextLine().trim().toCharArray();
+      words.add(word);
     }
     wordReader.close();
 
@@ -26,13 +25,15 @@ public class Solvle {
     boolean notSolved = true;
     int round = 0;
     int removedCount = 0;
+    char[] guess;
+    Set<String> guessedWords = new HashSet<>();  // use string comparison bc array comparison looks at storage location
 
     // begin playing
-    // STUMBLE WORDS: egret
     while (notSolved && round < 6) {
       round++;
       System.out.println("Please enter your guess:\n");
-      char[] guess = in.nextLine().toCharArray();
+      guess = in.nextLine().trim().toCharArray();
+      guessedWords.add(new String(guess));
       for (int i = 0; i < 5; i++) {
         System.out.println("Please enter the correctness of letter " + i + ":\n"); // 0 wrong, 1 green, 2 yellow
         int hit = Integer.parseInt(in.nextLine());
@@ -49,6 +50,8 @@ public class Solvle {
             words.remove(pos);
             removedCount++;
             pos--;
+          } else if (hit == 3) {
+            continue;
           }
         }
       }
@@ -56,13 +59,17 @@ public class Solvle {
         notSolved = false;
       } else {
         // ROUND RESULTS
+        if (guessedWords.contains(new String(words.get(0)))) {  // why no work?!?!?!
+          words.remove(0);
+          removedCount--;
+        }
         System.out.println("Round " + round + " complete. You've removed: " + removedCount + " words. There are: " + words.size() + " possible words remaining.");
         // SUGGEST A RANDOM WORD REMAINING
         int nextGuess = 0;
-        // System.out.println(nextGuess);
         System.out.println("Try guessing: " + new String(words.get(nextGuess)));
       }
     }
+
     if (notSolved) {
       System.out.println("Game over! :(");
     } else {
