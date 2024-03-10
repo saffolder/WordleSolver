@@ -2,6 +2,8 @@
  * Samuel Affolder 08/10/2022
  * Attempt at making a https://www.nytimes.com/games/wordle/index.html solver
  * Goals: 1) make a naive system that picks the next guess using the next word in the list
+ *        2) make it play automatically and online
+ *        3) make it play every morning
  */
 
 import java.io.File;
